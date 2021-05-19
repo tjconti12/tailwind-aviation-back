@@ -19,11 +19,13 @@ router.post('/login', (req, res) => {
             if(foundUser && bcrypt.compareSync(hashedPassword, foundUser.password)) {
                 const token = jwt.sign({
                     id: foundUser._id,
-                    username: foundUser.username
+                    username: foundUser.username,
+                    firstName: foundUser.firstName
                 }, SECRET)
                 res.status(200).json({
                     token,
-                    username: foundUser.username
+                    username: foundUser.username,
+                    firstName: foundUser.firstName
                 })
             } else {
                 res.status(500).json({
@@ -47,10 +49,13 @@ router.post('/register', (req, res) => {
         } else {
             const token = jwt.sign({
                 id: createdUser._id,
-                username: createdUser.username
+                username: createdUser.username,
+                firstName: createdUser.firstName
             }, SECRET)
             res.status(200).json({
-                token
+                token,
+                username: createdUser.username,
+                firstName: createdUser.firstName
             })
         }
     })

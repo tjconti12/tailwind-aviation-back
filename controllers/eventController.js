@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Event = require('../models/Event');
+const { auth } = require('./authController');
 
 // Root is /Events
 
@@ -29,7 +30,7 @@ router.get('/ByPlane/:group', async (req, res) => {
 })
 
 // Create Event
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         const createdEvent = await Event.create(req.body)
         res.status(200).json(createdEvent)
@@ -65,7 +66,7 @@ router.get('/ByTitle/:title', async (req, res) => {
 })
 
 // Update By Id
-router.put('/:id', async (req, res) => {
+router.put('/:id', auth, async (req, res) => {
     try {
         const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true})
         res.status(200).json(updatedEvent)
@@ -77,7 +78,7 @@ router.put('/:id', async (req, res) => {
 })
 
 // Update by title
-router.put('/ByTitle/:title', async (req, res) => {
+router.put('/ByTitle/:title',auth, async (req, res) => {
     try {
         const updatedEvent = await Event.findOneAndUpdate({title: {$eq: req.params.title}}, req.body, { new: true})
         res.status(200).json(updatedEvent)
@@ -89,7 +90,7 @@ router.put('/ByTitle/:title', async (req, res) => {
 })
 
 // Delete by Id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     try {
         const deletedEvent = await Event.findByIdAndDelete(req.params.id);
         res.status(200).json(deletedEvent);
@@ -101,7 +102,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 // Delete by title
-router.delete('/ByTitle/:title', async (req, res) => {
+router.delete('/ByTitle/:title', auth, async (req, res) => {
     try {
         const deletedEvent = await Event.findOneAndDelete({title: {$eq: req.params.title}})
         res.status(200).json(deletedEvent)
