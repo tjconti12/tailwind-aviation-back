@@ -7,7 +7,8 @@ const eventSchema = new Schema({
     group: {type: Number, required: true},
     title: {type: String, required: true},
     start_time: {type: Number, required: true},
-    end_time: {type: Number, required: true}
+    end_time: {type: Number, required: true},
+    username: {type: String}
 })
 
 module.exports = model('Event', eventSchema);

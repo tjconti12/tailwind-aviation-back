@@ -44,7 +44,7 @@ router.post('/', auth, async (req, res) => {
 // Show an event by id
 router.get('/:id', async (req, res) => {
     try {
-        const foundEvent = await Event.findById(req.params.id)
+        const foundEvent = await Event.find({id: req.params.id})
         res.status(200).json(foundEvent)
     } catch (error) {
         res.status(400).json({
@@ -92,7 +92,7 @@ router.put('/ByTitle/:title',auth, async (req, res) => {
 // Delete by Id
 router.delete('/:id', auth, async (req, res) => {
     try {
-        const deletedEvent = await Event.findByIdAndDelete(req.params.id);
+        const deletedEvent = await Event.findOneAndDelete({id: req.params.id});
         res.status(200).json(deletedEvent);
     } catch (error) {
         res.status(400).json({

@@ -18,7 +18,7 @@ module.exports.auth = (req, res, next) => {
                 if(user.username === req.body.username) {
                     res.locals.user = user.username
                     next()
-                } else if(req.method === 'GET' || res.method === 'DELETE') {
+                } else if(req.method === 'GET' || req.method === 'DELETE') {
                     res.locals.user = user.username
                     next()
                 } else {
